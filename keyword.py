@@ -24,6 +24,33 @@ def formatFileIntoWords(filePath):
 
     return formatedData.split(" ")
 
+def sortArray(array):
+    # I used a merge sort for this algorithm
+
+    if len(array) == 1:
+        return array
+
+    # Get Left and Right
+    mid = len(array)//2
+    left = sortArray(array[mid:])
+    right = sortArray(array[:mid])
+
+    # Merge
+    wholeArray = []
+    LL, RL, l, r = len(left), len(right), 0, 0  # Set Left and Right Length, l and r are position counters
+    TL = LL * RL  # Total Length of Array
+    for i in range(TL):
+        # Should it pull the right?
+        if l == LL or (r != RL and left[l] < right[r]):
+            wholeArray.append(right[r])
+            r += 1
+            continue
+
+        # If not, pull the left
+        wholeArray.append(left[l])
+        l += 1
+
+
 # Main Program Here
 def topKWords():
     # Get Arguments
@@ -44,5 +71,9 @@ def topKWords():
         print("Input Error Occurred\nParameters hould be \"input=;k=;mostfrequent=;uppercase=;output=\"")
         return -2
 
+
+# Test Functions
+
+print(sortArray([2, 5, 3, 1, 5, 2, 3, 8, 9]))
 # Run Program
 topKWords()
