@@ -144,7 +144,8 @@ def capital(words):
         fixword = fixword + chr(n)
     return fixword
 
-
+def getStopwords():
+    return open("stopwords.txt").read().splitlines()
 
 # Main Program Here
 def topKWords():
@@ -168,6 +169,9 @@ def topKWords():
 
     wordList = formatFileIntoWords(inputPath)
 
+    stopwords = getStopwords()
+    wordList = [x for x in wordList if x not in stopwords]
+
     if uppercase == "Y":
         wordList = capital(wordList)
 
@@ -177,16 +181,6 @@ def topKWords():
 
     outputWithK(outputPath, wordTouples, K)
 
-
-
-
-
-
-
-words = [("Hello", 2), ("Caring", 3), ("Fart", 5), ("Looping", 2), ("Awesome", 3), ("Greetings", 5)]
-
-words = sortArray(words, False)
-print(words)
 
 # Run Program
 topKWords()
