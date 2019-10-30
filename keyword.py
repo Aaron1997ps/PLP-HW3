@@ -91,7 +91,7 @@ def outputWithK(filePath, wordTouples, k):
     currentPos = 0
     while(totalOutput < k):
 
-        outputFile.write(wordTouples[currentPos][0] + " " + str(wordTouples[currentPos][1]))
+        outputFile.write(wordTouples[currentPos][0] + " " + str(wordTouples[currentPos][1]) + '\n')
 
         if currentCountVal != wordTouples[currentPos][1]:
             currentCountVal = wordTouples[currentPos][1]
@@ -144,6 +144,11 @@ def capital(words):
         fixword = fixword + chr(n)
     return fixword
 
+
+def counting(words):
+    coun = [1] * len(words)
+    wordList = list(map(lambda x, y: (x, y), words, coun))
+    return wordList
 def getStopwords():
     return open("stopwords.txt").read().splitlines()
 
@@ -173,9 +178,11 @@ def topKWords():
     wordList = [x for x in wordList if x not in stopwords]
 
     if uppercase == "Y":
-        wordList = capital(wordList)
+        wordList = list(map(capital, wordList))
 
-    wordTouples = [(word, sum([x for w, x in wordList if w == word])) for word in set([k for k, v in wordList])]
+    wordCount = counting(wordList)
+
+    wordTouples = [(word, sum([x for w, x in wordCount if w == word])) for word in set([k for k, v in wordCount])]
 
     wordTouples = sortArray(wordTouples, mostFrequent == "Y")
 
