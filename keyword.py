@@ -90,8 +90,6 @@ def outputWithK(filePath, wordTouples, k):
     currentCountVal = wordTouples[0][1]
     currentPos = 0
     while(totalOutput < k):
-        print("totalOutput: " + str(totalOutput) + " K: " + str(k))
-
         outputFile.write(wordTouples[currentPos][0] + " " + str(wordTouples[currentPos][1]) + '\n')
 
 
