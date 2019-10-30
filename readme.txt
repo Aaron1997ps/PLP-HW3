@@ -1,4 +1,5 @@
-
+Running: python3 keyword.py "input=<inputFilePath>;k=<numberOfOutputs>;mostfrequent=<Y || N>;uppercase=<Y || N>;output=<outputFilePath>"
+Example: python3 keyword.py "input=input.txt;k=2;mostfrequent=Y;uppercase=N;output=keywords.txt"
 
 We created our own array function called AArray. It starts with a static size and can not change without the "resize" function.
 It has its own tracker for how many elements are currently stored. Adding a new element with the "addElement" function
