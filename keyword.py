@@ -161,10 +161,10 @@ def topKWords():
         print("Expected arguments: input, K, mostfrequent, uppercase, output\nSee readme for more details.")
         return -1
 
-    print("Arguments: " + sys.argv[1])
+    #print("Arguments: " + sys.argv[1])
     try:
         args = sys.argv[1].split(";")
-        print(args)
+        #print(args)
         inputPath = args[0][6:]
         K = int(args[1][2:])
         mostFrequent = args[2][13:]
