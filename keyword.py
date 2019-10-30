@@ -56,6 +56,10 @@ def formatFileIntoWords(filePath):
     # Remove End-Lines if needed
     formatedData = fileContent.lower().replace("\n", " ")
 
+    while(formatedData[0] == ' '):
+        formatedData = formatedData[1:]
+    while(formatedData[len(formatedData)-1] == ' '):
+        formatedData = formatedData[:-1]
     # Remove non-letter characters from a string
     def removeNonChars(text):
         if len(text) > 1:
