@@ -83,6 +83,7 @@ def outputWithK(filePath, wordTouples, k):
 
     if len(wordTouples) == 0:
         print("Word Touple was empty")
+        outputFile.close()
         return
 
     totalOutput = 0
@@ -98,7 +99,10 @@ def outputWithK(filePath, wordTouples, k):
 
         currentPos += 1
         if currentPos == len(wordTouples):
+            outputFile.close()
             return
+
+    outputFile.close()
 
 def sortArray(ToupleList, mostFrequent):
     # I used a merge sort for this algorithm
