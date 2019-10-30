@@ -42,6 +42,10 @@ class AArray(object):
         string += "]"
         return string
 
+    @property
+    def returnList(self):
+        return self.elements[:self.currentSize]
+
 
 
 
@@ -74,38 +78,34 @@ def formatFileIntoWords(filePath):
 
     return returnArray
 
-def sortArray(array):
+def sortArray(ToupleList):
     # I used a merge sort for this algorithm
 
-    if array.size == 1:
-        return array
+    ListSize = len(ToupleList)
+
+    if ListSize == 1:
+        return ToupleList
+
 
     # Get Left and Right
-    mid = array.size//2
+    mid = ListSize//2
 
-    leftArray = AArray(mid+1)
-    for i in range(0, mid):
-        leftArray.addElement(array[i])
-    left = sortArray(leftArray)
-
-    rightArray = AArray(mid+1)
-    for i in range(mid, array.size):
-        rightArray.addElement(array[i])
-    right = sortArray(rightArray)
+    left = sortArray(ToupleList[:mid])
+    right = sortArray(ToupleList[mid:])
 
     # Merge
-    wholeArray = AArray(array.size)
-    LL, RL, l, r = left.size, right.size, 0, 0  # Set Left and Right Length, l and r are position counters
+    wholeArray = [None] * ListSize
+    LL, RL, l, r = len(left), len(right), 0, 0  # Set Left and Right Length, l and r are position counters
     TL = LL + RL  # Total Length of Array
     for i in range(TL):
         # Should it pull the right?
-        if l == LL or (r != RL and left[l] < right[r]):
-            wholeArray.addElement(right[r])
+        if l == LL or (r != RL and ((left[l][1] < right[r][1] and not (left[l][1] == right[r][1])) or (left[l][0] > right[r][0] and (left[l][1] == right[r][1])))):
+            wholeArray[i] = right[r]
             r += 1
             continue
 
         # If not, pull the left
-        wholeArray.addElement(left[l])
+        wholeArray[i] = left[l]
         l += 1
 
     return wholeArray
@@ -132,14 +132,6 @@ def topKWords():
         return -2
 
 
-# Test Functions
-
-array = AArray(100)
-print(array)
-for i in [2, 5, 3, 1, 5, 2, 3, 8, 9]:
-    array.addElement(i)
-print(array)
-print(sortArray(array))
 # Run Program
 topKWords()
 
