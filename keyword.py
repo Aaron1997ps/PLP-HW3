@@ -167,7 +167,7 @@ def topKWords():
     if uppercase == "Y":
         wordList = capital(wordList)
 
-    wordTouples = [()]  # Put {Words -> (Word, count)} function here
+    wordTouples = [(word, sum([x for w, x in wordList if w == word])) for word in set([k for k, v in wordList])]
 
     wordTouples = sortArray(wordTouples, mostFrequent == "Y")
 
