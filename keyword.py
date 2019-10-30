@@ -90,17 +90,19 @@ def outputWithK(filePath, wordTouples, k):
     currentCountVal = wordTouples[0][1]
     currentPos = 0
     while(totalOutput < k):
+        print("totalOutput: " + str(totalOutput) + " K: " + str(k))
 
         outputFile.write(wordTouples[currentPos][0] + " " + str(wordTouples[currentPos][1]) + '\n')
 
-        if currentCountVal != wordTouples[currentPos][1]:
-            currentCountVal = wordTouples[currentPos][1]
-            totalOutput += 1
+
 
         currentPos += 1
         if currentPos == len(wordTouples):
             outputFile.close()
             return
+        elif currentCountVal != wordTouples[currentPos][1]:
+            currentCountVal = wordTouples[currentPos][1]
+            totalOutput += 1
 
     outputFile.close()
 
@@ -186,7 +188,7 @@ def topKWords():
 
     wordTouples = sortArray(wordTouples, mostFrequent == "Y")
 
-    outputWithK(outputPath, wordTouples, K)
+    outputWithK(outputPath, wordTouples, int(K))
 
 
 # Run Program
