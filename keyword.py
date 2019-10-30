@@ -78,7 +78,29 @@ def formatFileIntoWords(filePath):
 
     return returnArray
 
-def sortArray(ToupleList):
+def outputWithK(filePath, wordTouples, k):
+    outputFile = open(filePath, 'w')
+
+    if len(wordTouples) == 0:
+        print("Word Touple was empty")
+        return
+
+    totalOutput = 0
+    currentCountVal = wordTouples[0][1]
+    currentPos = 0
+    while(totalOutput < k):
+
+        outputFile.write(wordTouples[currentPos][0] + " " + str(wordTouples[currentPos][1]))
+
+        if currentCountVal != wordTouples[currentPos][1]:
+            currentCountVal = wordTouples[currentPos][1]
+            totalOutput += 1
+
+        currentPos += 1
+        if currentPos == len(wordTouples):
+            return
+
+def sortArray(ToupleList, mostFrequent):
     # I used a merge sort for this algorithm
 
     ListSize = len(ToupleList)
@@ -90,8 +112,8 @@ def sortArray(ToupleList):
     # Get Left and Right
     mid = ListSize//2
 
-    left = sortArray(ToupleList[:mid])
-    right = sortArray(ToupleList[mid:])
+    left = sortArray(ToupleList[:mid], mostFrequent)
+    right = sortArray(ToupleList[mid:], mostFrequent)
 
     # Merge
     wholeArray = [None] * ListSize
@@ -99,7 +121,7 @@ def sortArray(ToupleList):
     TL = LL + RL  # Total Length of Array
     for i in range(TL):
         # Should it pull the right?
-        if l == LL or (r != RL and ((left[l][1] < right[r][1] and not (left[l][1] == right[r][1])) or (left[l][0] > right[r][0] and (left[l][1] == right[r][1])))):
+        if l == LL or (r != RL and ((((left[l][1] < right[r][1]) == mostFrequent) and not (left[l][1] == right[r][1])) or (left[l][0] > right[r][0] and (left[l][1] == right[r][1])))):
             wholeArray[i] = right[r]
             r += 1
             continue
@@ -109,6 +131,15 @@ def sortArray(ToupleList):
         l += 1
 
     return wholeArray
+
+def capital(words):
+    fixword = ''
+    chars = list(words)
+    for x in chars:
+        n = ord(x) - 32
+        fixword = fixword + chr(n)
+    return fixword
+
 
 
 # Main Program Here
@@ -124,13 +155,34 @@ def topKWords():
         print(args)
         inputPath = args[0][6:]
         K = int(args[1][2:])
-        mostFrquent = args[2][13:]
+        mostFrequent = args[2][13:]
         uppercase = args[3][10:]
         outputPath = args[4][7:]
     except:
         print("Input Error Occurred\nParameters should be \"input=;k=;mostfrequent=;uppercase=;output=\"")
         return -2
 
+    wordList = formatFileIntoWords(inputPath)
+
+    if uppercase == "Y":
+        wordList = capital(wordList)
+
+    wordTouples = [()]  # Put {Words -> (Word, count)} function here
+
+    wordTouples = sortArray(wordTouples, mostFrequent == "Y")
+
+    outputWithK(outputPath, wordTouples, K)
+
+
+
+
+
+
+
+words = [("Hello", 2), ("Caring", 3), ("Fart", 5), ("Looping", 2), ("Awesome", 3), ("Greetings", 5)]
+
+words = sortArray(words, False)
+print(words)
 
 # Run Program
 topKWords()
