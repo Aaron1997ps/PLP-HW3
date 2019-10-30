@@ -1,7 +1,7 @@
 import sys
 #import os
 
-class AArray(object):
+'''class AArray(object):
     def __init__(self, maxSize):
         self.maxSize = maxSize
         self.elements = [None for _ in range(maxSize)]
@@ -45,7 +45,7 @@ class AArray(object):
     @property
     def returnList(self):
         return self.elements[:self.currentSize]
-
+'''
 
 
 
@@ -72,11 +72,11 @@ def formatFileIntoWords(filePath):
         formatedData = formatedData.replace("  ", " ")
 
     formatedData = formatedData.split(" ")
-    returnArray = AArray(len(formatedData))
+    '''returnArray = AArray(len(formatedData))
     for s in formatedData:
         returnArray.addElement(s)
-
-    return returnArray
+    '''
+    return formatedData
 
 def outputWithK(filePath, wordTouples, k):
     outputFile = open(filePath, 'w')
@@ -91,8 +91,6 @@ def outputWithK(filePath, wordTouples, k):
     currentPos = 0
     while(totalOutput < k):
         outputFile.write(wordTouples[currentPos][0] + " " + str(wordTouples[currentPos][1]) + '\n')
-
-
 
         currentPos += 1
         if currentPos == len(wordTouples):
