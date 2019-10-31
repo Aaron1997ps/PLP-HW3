@@ -86,7 +86,7 @@ def outputWithK(filePath, wordTouples, k):
     outputFile = open(filePath, 'w')
 
     if len(wordTouples) == 0:
-        print("Word Touple was empty")
+        #print("Word Touple was empty")
         outputFile.close()
         return
 
@@ -111,7 +111,10 @@ def sortArray(ToupleList, mostFrequent):
 
     ListSize = len(ToupleList)
 
-    if ListSize == 1:
+    if ListSize == 0:
+        return ToupleList
+
+    elif ListSize == 1:
         return ToupleList
 
 
