@@ -191,7 +191,7 @@ def topKWords():
 
     wordTouples = sortArray(wordTouples, mostFrequent == "Y")
 
-    outputWithK(outputPath, wordTouples, int(K))
+    outputWithK(outputPath.replace('=', ''), wordTouples, int(K))
 
 
 # Run Program
