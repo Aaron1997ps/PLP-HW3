@@ -1,5 +1,6 @@
 import sys
-#import os
+
+# import os
 
 '''class AArray(object):
     def __init__(self, maxSize):
@@ -48,27 +49,28 @@ import sys
 '''
 
 
-
-
 def formatFileIntoWords(filePath):
     fileContent = open(filePath).read()
 
     # Remove End-Lines if needed
     formatedData = fileContent.lower().replace("\n", " ")
 
-    while(formatedData[0] == ' '):
+    while (formatedData[0] == ' '):
         formatedData = formatedData[1:]
-    while(formatedData[len(formatedData)-1] == ' '):
+    while (formatedData[len(formatedData) - 1] == ' '):
         formatedData = formatedData[:-1]
+
     # Remove non-letter characters from a string
     def removeNonChars(text):
         if len(text) > 1:
-            half = len(text)//2
+            half = len(text) // 2
             return removeNonChars(text[:half]) + removeNonChars(text[half:])
-        if text[0] in ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]:
+        if text[0] in ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+                       "t", "u", "v", "w", "x", "y", "z", " "]:
             return text[0]
         else:
             return ""
+
     formatedData = removeNonChars(formatedData)
 
     # Remove Extra Spaces
@@ -82,29 +84,33 @@ def formatFileIntoWords(filePath):
     '''
     return formatedData
 
+
 def outputWithK(filePath, wordTouples, k):
     outputFile = open(filePath, 'w')
 
     if len(wordTouples) == 0:
-        #print("Word Touple was empty")
+        # print("Word Touple was empty")
         outputFile.close()
         return
 
     totalOutput = 0
     currentCountVal = wordTouples[0][1]
     currentPos = 0
-    while(totalOutput < k):
+    while (totalOutput < k):
         outputFile.write(wordTouples[currentPos][0] + " " + str(wordTouples[currentPos][1]) + '\n')
 
         currentPos += 1
+
         if currentPos == len(wordTouples):
             outputFile.close()
             return
+
         elif currentCountVal != wordTouples[currentPos][1]:
             currentCountVal = wordTouples[currentPos][1]
             totalOutput += 1
 
     outputFile.close()
+
 
 def sortArray(ToupleList, mostFrequent):
     # I used a merge sort for this algorithm
@@ -117,9 +123,8 @@ def sortArray(ToupleList, mostFrequent):
     elif ListSize == 1:
         return ToupleList
 
-
     # Get Left and Right
-    mid = ListSize//2
+    mid = ListSize // 2
 
     left = sortArray(ToupleList[:mid], mostFrequent)
     right = sortArray(ToupleList[mid:], mostFrequent)
@@ -130,7 +135,9 @@ def sortArray(ToupleList, mostFrequent):
     TL = LL + RL  # Total Length of Array
     for i in range(TL):
         # Should it pull the right?
-        if l == LL or (r != RL and ((((left[l][1] < right[r][1]) == mostFrequent) and not (left[l][1] == right[r][1])) or (left[l][0] > right[r][0] and (left[l][1] == right[r][1])))):
+        if l == LL or (r != RL and (
+                (((left[l][1] < right[r][1]) == mostFrequent) and not (left[l][1] == right[r][1])) or (
+                left[l][0] > right[r][0] and (left[l][1] == right[r][1])))):
             wholeArray[i] = right[r]
             r += 1
             continue
@@ -140,6 +147,7 @@ def sortArray(ToupleList, mostFrequent):
         l += 1
 
     return wholeArray
+
 
 def capital(words):
     fixword = ''
@@ -154,8 +162,11 @@ def counting(words):
     coun = [1] * len(words)
     wordList = list(map(lambda x, y: (x, y), words, coun))
     return wordList
+
+
 def getStopwords():
     return open("stopwords.txt").read().splitlines()
+
 
 # Main Program Here
 def topKWords():
@@ -164,10 +175,10 @@ def topKWords():
         print("Expected arguments: input, K, mostfrequent, uppercase, output\nSee readme for more details.")
         return -1
 
-    #print("Arguments: " + sys.argv[1])
+    # print("Arguments: " + sys.argv[1])
     try:
         args = sys.argv[1].split(";")
-        #print(args)
+        # print(args)
         inputPath = args[0][6:]
         K = int(args[1][2:])
         mostFrequent = args[2][13:]
