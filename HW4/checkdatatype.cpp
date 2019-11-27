@@ -2,7 +2,37 @@
 #include <fstream>
 #include <array>
 #include <string>
+#include <vector>
 using namespace std;
+
+class variableStorage {
+private:
+    vector<tuple<string, string, string>> variable;
+
+public:
+    void setVariable(string variable, string type, string value);
+    string getType(string variable);
+    string getValue(string variable);
+    void appendPost(string appendTo, string type, string value);
+    void appendPre(string appendTo, string type, string value);
+};
+
+void variableStorage::setVariable(string variable, string type, string value) {}{
+
+};
+string variableStorage::getType(string variable){
+    return "";
+}
+string variableStorage::getValue(string variable){
+    return "";
+}
+void variableStorage::appendPost(string appendTo, string type, string value) {
+
+}
+void variableStorage::appendPre(string appendTo, string type, string value) {
+    
+}
+
 
 int main(int argc, char** argv) {
 
@@ -43,7 +73,7 @@ int main(int argc, char** argv) {
 
 
 
-    
+
 
     inputFile.close();
     outputFile.close();
