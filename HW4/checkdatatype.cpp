@@ -23,26 +23,29 @@ int main(int argc, char** argv) {
     cout << "Input File: " << inputFilepath << endl;
     ifstream inputFile(inputFilepath);
 
-    /*
     string outputFilepath = inputFilepath.substr(0, inputFilepath.find('.')) + ".out";
     cout << "Output File: " << outputFilepath << endl;
     ofstream outputFile;  //Removes the file extension and replaces it with .out
     outputFile.open(outputFilepath);
-    */
 
     if (!inputFile.is_open()){
         cout << "Error: Input file failed to open" << endl;
         return -3;
     }
-    /*
+
     if (!outputFile.is_open()){
         cout << "Error: Output file failed to open" << endl;
         return -4;
     }
-     */
 
+
+
+
+
+
+    
 
     inputFile.close();
-    //outputFile.close();
+    outputFile.close();
     return 0;
 }
