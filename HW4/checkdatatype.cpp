@@ -7,7 +7,7 @@ using namespace std;
 
 class variableStorage {
 private:
-    vector<tuple<string, string, string>> variable;
+    vector<tuple<string, string, string>> variables;
 
 public:
     void setVariable(string variable, string type, string value);
@@ -18,7 +18,7 @@ public:
 };
 
 void variableStorage::setVariable(string variable, string type, string value) {}{
-
+    variables.assign(<variable, type, value>);
 };
 string variableStorage::getType(string variable){
     return "";
@@ -30,7 +30,7 @@ void variableStorage::appendPost(string appendTo, string type, string value) {
 
 }
 void variableStorage::appendPre(string appendTo, string type, string value) {
-    
+
 }
 
 
