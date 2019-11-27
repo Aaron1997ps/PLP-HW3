@@ -18,7 +18,7 @@ public:
 };
 
 void variableStorage::setVariable(const string& variable, const string& type, const string& value){
-    variables.push_back(make_tuple(variable, type, value));
+    variables.emplace_back(variable, type, value);
 };
 string variableStorage::getType(const string& variable){
     for (auto & i : variables){
