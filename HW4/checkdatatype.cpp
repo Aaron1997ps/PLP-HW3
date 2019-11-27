@@ -10,31 +10,36 @@ private:
     vector<tuple<string, string, string>> variables;
 
 public:
-    void setVariable(string variable, string type, string value);
-    string getType(string variable);
-    string getValue(string variable);
-    void appendPost(string appendTo, string type, string value);
-    void appendPre(string appendTo, string type, string value);
+    void setVariable(const string& variable, const string& type, const string& value);
+    string getType(const string& variable);
+    string getValue(const string& variable);
+    void appendPost(const string& appendTo, const string& type, const string& value);
+    void appendPre(const string& appendTo, const string& type, const string& value);
 };
 
-void variableStorage::setVariable(string variable, string type, string value) {}{
+void variableStorage::setVariable(const string& variable, const string& type, const string& value) {}{
     variables.push_back(<variable, type, value>);
 };
-string variableStorage::getType(string variable){
-    for (int i = 0; i < variables.size();i++){
+string variableStorage::getType(const string& variable){
+    for (unsigned int i = 0; i < variables.size();i++){
         if (variables[i][0] == variable){
             return variables[i][1]
         }
     }
     return "Not Found";
 }
-string variableStorage::getValue(string variable){
-    return "";
+string variableStorage::getValue(const string& variable){
+    for (unsigned int i = 0; i < variables.size();i++){
+        if (variables[i][0] == variable){
+            return variables[i][2]
+        }
+    }
+    return "Not Found";
 }
-void variableStorage::appendPost(string appendTo, string type, string value) {
+void variableStorage::appendPost(const string& appendTo, const string& type, const string& value) {
 
 }
-void variableStorage::appendPre(string appendTo, string type, string value) {
+void variableStorage::appendPre(const string& appendTo, const string& type, const string& value) {
 
 }
 
