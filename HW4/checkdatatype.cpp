@@ -37,7 +37,22 @@ string variableStorage::getValue(const string& variable){
     return "Not Found";
 }
 void variableStorage::appendPost(const string& appendTo, const string& type, const string& value) {
+    string appendToType = getType(appendTo);
+    if (appendToType != "list"){
+        cout << "Tried to append " << value << " of type " << type << " to a " << appendToType << ", appendTo" << endl;
+    }
 
+    string newValue = value;
+    if (type == "variable"){
+        newValue = getValue(value);
+    }
+
+    string appendToValue = getValue(appendTo);
+    if (appendToValue.empty()){
+        setVariable(appendTo, "list", newValue);
+        return;
+    }
+    setVariable(appendTo, "list", getValue(appendToValue)+","+newValue);
 }
 void variableStorage::appendPre(const string& appendTo, const string& type, const string& value) {
 
