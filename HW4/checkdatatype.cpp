@@ -17,21 +17,21 @@ public:
     void appendPre(const string& appendTo, const string& type, const string& value);
 };
 
-void variableStorage::setVariable(const string& variable, const string& type, const string& value) {}{
-    variables.push_back(<variable, type, value>);
+void variableStorage::setVariable(const string& variable, const string& type, const string& value){
+    variables.push_back(make_tuple(variable, type, value));
 };
 string variableStorage::getType(const string& variable){
-    for (unsigned int i = 0; i < variables.size();i++){
-        if (variables[i][0] == variable){
-            return variables[i][1]
+    for (auto & i : variables){
+        if (get<0>(i) == variable){
+            return get<1>(i);
         }
     }
     return "Not Found";
 }
 string variableStorage::getValue(const string& variable){
-    for (unsigned int i = 0; i < variables.size();i++){
-        if (variables[i][0] == variable){
-            return variables[i][2]
+    for (auto & i : variables){
+        if (get<0>(i) == variable){
+            return get<1>(i);
         }
     }
     return "Not Found";
