@@ -18,10 +18,15 @@ public:
 };
 
 void variableStorage::setVariable(string variable, string type, string value) {}{
-    variables.assign(<variable, type, value>);
+    variables.push_back(<variable, type, value>);
 };
 string variableStorage::getType(string variable){
-    return "";
+    for (int i = 0; i < variables.size();i++){
+        if (variables[i][0] == variable){
+            return variables[i][1]
+        }
+    }
+    return "Not Found";
 }
 string variableStorage::getValue(string variable){
     return "";
