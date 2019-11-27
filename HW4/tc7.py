@@ -1,19 +1,17 @@
-a = 40
-b = 90
-c = 45
-d = "str"
+t=0
+l1=[1]
+l2=[2]
+l3=[4]
+l5=["st1"]
+l6=["st2"]
+l7=[5]
+l8=[6]
+l9=["st3"]
 
-if a>b:
-    x=45
-else:
-    x=100
-x="am"
-y=d+x
-if y<c:
-    b="pm"
-else:
-    f=x+"tomorrow"+"never"+"dies"
-    g=a+x
-w = f * d
-y = f + d + 5
+l10=l1+l2+l3+l7+l8
+print(l10[1:])
+#[2,4,5,6]
 
+l11=l5 + l6 +l9
+print(l11)
+#["st1","st2","st3"]

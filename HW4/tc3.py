@@ -1,12 +1,10 @@
-#list program
-l1=[]
-l2=[]
-
-l1.append(23)
-l2.append("two")
-l1.append("45")
-l2.append("four")
-l3=l1+l2
-l4=[]
-l4.append(2)
-l5=l1*l4
+a=[1]
+b=[2]
+c=[3]
+d=[4]
+l3=a+b+c
+l4=c+d+[5]
+print(l3[0])
+#1
+print(l4[1:])
+#[4,5]

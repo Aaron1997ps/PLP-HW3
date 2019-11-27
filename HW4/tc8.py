@@ -1,13 +1,11 @@
-def f1(a,b,c,d):
-    return a+b+c+d
+t=0
+a=1 if t>0 else 1
+l1=[a]
 
-c = "lmnop"
-c=f1(3,4,5,6)
-e=f1("3",3,2,"k")
+b=2 if a>1 else 3
+l2=[b]
 
-def f2(k1,k2):
-    return k1 *k2
+l3=l1+l2+[2]+[3]+[4]
 
-g1=f2(2,3)
-g2=f2("hi","bye")
-
+print(l3[1:])
+#[3,2,3,4]
