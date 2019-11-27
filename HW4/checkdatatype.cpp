@@ -109,7 +109,57 @@ int main(int argc, char** argv) {
     }
 
 
+    string cl;
+    string vari;
+    string data;
+    char cdata;
+    string type;
+    map< string, pair<string, string>> book;
 
+    while(getline(inputFile,cl)){
+        for(int i=0; i<cl.length(); i++){
+            if(cl[i] == ' ') cl.erase(i,1);
+             }
+
+        size_t del = cl.find('=');
+
+    if(cl == ""){
+        continue;
+    }
+
+    else if( !cl.find("#")){
+        continue;
+    }
+
+    else{
+
+        if(cl.find("=")){
+
+            vari = cl.substr(0, del);
+            data = cl.substr(del + 1);
+            cdata = data[0];
+            if (cdata == "[")
+            {
+                type = "list"
+            }
+            
+            else if(isdigit(cdata)==true){
+                type = "int";
+            }
+
+            else{
+                type = "string";
+            }
+            
+        book[vari] = make_pair(data, type);
+
+        }
+            
+    }
+
+    outputFile << cl << endl;
+
+    }
 
 
 
