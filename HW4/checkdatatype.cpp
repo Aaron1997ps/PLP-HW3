@@ -114,7 +114,7 @@ int main(int argc, char** argv) {
     string data;
     char cdata;
     string type;
-    map< string, pair<string, string>> book;
+    variableStorage variables;
 
     while(getline(inputFile,cl)){
         for(int i=0; i<cl.length(); i++){
@@ -150,8 +150,8 @@ int main(int argc, char** argv) {
             else{
                 type = "string";
             }
-            
-        book[vari] = make_pair(data, type);
+
+            variables.setVariable(vari,type,data);
 
         }
             
