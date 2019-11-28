@@ -23,7 +23,16 @@ public:
 };
 
 void variableStorage::setVariable(const string& variable, const string& type, const string& value){
-    variables.emplace_back(variable, type, value);
+    if (getType(variable) == "Not Found")
+        variables.emplace_back(variable, type, value);
+    else{
+        for (auto & i : variables){
+            if (get<0>(i) == variable){
+                i = make_tuple(variable, type, value);
+                break;
+            }
+        }
+    }
 };
 string variableStorage::getType(const string& variable){
     for (auto & i : variables){
@@ -333,6 +342,8 @@ int main(int argc, char** argv) {
                     dataElse = variables.getValue(dataElse);
                 }
 
+                cout << "typeIf: " << typeIf << " dataIf: " << dataIf << " typeElse: " << typeElse << " dataElse: " << dataElse << endl;
+
                 //Evaluate Boolean Expression
                 string leftType, leftValue, rightType, rightValue, comparisonType;
                 if (boolExpression.find(">=") != string::npos){
@@ -359,6 +370,7 @@ int main(int argc, char** argv) {
                     rightValue = variables.getValue(rightValue);
                 }
 
+                cout << "leftType: " << leftType << " leftValue: " << leftValue << " rightType: " << rightType << " rightValue: " << rightValue << endl;
                 //Set Data based on Boolean Expression
                 if (leftType != rightType){
                     outputFile << "#error" << endl;
