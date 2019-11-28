@@ -75,6 +75,7 @@ void variableStorage::appendPre(const string& appendTo, const string& type, cons
 }
 string variableStorage::getPartialList(const string &variable, int start, int end) {
     string value = getValue(variable);
+    int totalElements = count(value.begin(), value.end(), ',') + 1;
 
     //Remove brackets
     value = value.substr(1, value.length() -2);
@@ -87,7 +88,17 @@ string variableStorage::getPartialList(const string &variable, int start, int en
         return value.substr(0,value.find(','));
     }
 
-    return "";
+    if (end != totalElements) {
+        end = totalElements-end;
+        for(unsigned int i = value.length()-1; i > 0 && end != 0; i--){
+            if (value[i] == ','){
+                value = value.substr(0, i);
+                end -= 1;
+            }
+        }
+    }
+
+    return "[" + value + "]";
 }
 
 void throwError(){
