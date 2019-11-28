@@ -120,13 +120,12 @@ int main(int argc, char** argv) {
         //Erases all the spaces in the line
         for(int i=0; i < line.length(); i++){
             if(line[i] == ' ') line.erase(i, 1);
+            if(line[i] == '#') line.erase(i, line.length() - i);
         }
 
         size_t del = line.find('=');
 
         if(line.empty()){
-            continue;
-        }else if( !line.find('#')){
             continue;
         }else{
             if(line.find('=')) {
@@ -147,7 +146,7 @@ int main(int argc, char** argv) {
             }
         }
 
-    outputFile << line << endl;
+        outputFile << line << endl;
 
     }
 
