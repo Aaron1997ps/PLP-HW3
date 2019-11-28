@@ -165,6 +165,8 @@ int main(int argc, char** argv) {
         for(unsigned int i=0; i < line.length(); i++){
             if(line[i] == ' ') line.erase(i, 1);
             if(line[i] == '#') line.erase(i, line.length() - i);
+            if(line[i] == '(') line.erase(i, 1);
+            if(line[i] == ')') line.erase(i, 1);
         }
 
         size_t del = line.find('=');
