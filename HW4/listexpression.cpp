@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
     while(getline(inputFile, line)){
         originalLine = line;
 
-        //Erases all the spaces in the line
+        //Erases all the spaces in the line and everything after a #
         for(int i=0; i < line.length(); i++){
             if(line[i] == ' ') line.erase(i, 1);
             if(line[i] == '#') line.erase(i, line.length() - i);
@@ -125,28 +125,26 @@ int main(int argc, char** argv) {
 
         size_t del = line.find('=');
 
-        if(line.empty()){
-            continue;
-        }else{
-            if(line.find('=')) {
-
-                vari = line.substr(0, del);
-                data = line.substr(del + 1);
-                cdata = data[0];
-                if (cdata == '[') {
-                    type = "list";
-                } else if (isdigit(cdata)) {
-                    type = "int";
-                } else {
-                    type = "string";
-                }
-
-                variables.setVariable(vari, type, data);
-
+        if(line.empty()) {
+            //Skip
+        }else if(line.substr(0,5) == "print"){
+            outputFile << ">>>" << variables.getValue(line.substr(6,line.length()-7)) << endl;
+        }else if(line.find('=')) {
+            vari = line.substr(0, del);
+            data = line.substr(del + 1);
+            cdata = data[0];
+            if (cdata == '[') {
+                type = "list";
+            } else if (isdigit(cdata)) {
+                type = "int";
+            } else {
+                type = "string";
             }
+
+            variables.setVariable(vari, type, data);
         }
 
-        outputFile << line << endl;
+        outputFile << originalLine << endl;
 
     }
 
