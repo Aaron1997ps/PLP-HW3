@@ -24,7 +24,6 @@ public:
 
 void variableStorage::setVariable(const string& variable, const string& type, const string& value){
     variables.emplace_back(variable, type, value);
-    cout << "Var: " << variable << " type: " << type << " data: " << value << endl;
 };
 string variableStorage::getType(const string& variable){
     for (auto & i : variables){
