@@ -24,6 +24,7 @@ public:
 
 void variableStorage::setVariable(const string& variable, const string& type, const string& value){
     variables.emplace_back(variable, type, value);
+    cout << "Var: " << variable << " type: " << type << " data: " << value << endl;
 };
 string variableStorage::getType(const string& variable){
     for (auto & i : variables){
@@ -243,6 +244,20 @@ int main(int argc, char** argv) {
                     type = variables.getType(data);
                     data = variables.getValue(data);
                 }
+                if (type == "list"){
+                    variableStorage tempList;
+                    tempList.setVariable("t", "list", data);
+                    string newData = "[";
+                    for(int i = 0; i < count(data.begin(), data.end(), ',') + 1; i++){
+                        if (i != 0)
+                            newData += ",";
+                        if (evaluateType(tempList.getPartialList("t",i,i)) == "variable")
+                            newData += variables.getValue(tempList.getPartialList("t",i,i));
+                        else
+                            newData += tempList.getPartialList("t",i,i);
+                    }
+                    data = newData + "]";
+                }
 
                 //Merge with other + signs
                 string tempType, tempData;
@@ -253,6 +268,20 @@ int main(int argc, char** argv) {
                     if (tempType == "variable"){
                         tempType = variables.getType(tempData);
                         tempData = variables.getValue(tempData);
+                    }
+                    if (tempType == "list"){
+                        variableStorage tempList;
+                        tempList.setVariable("t", "list", tempData);
+                        string newData = "[";
+                        for(int i = 0; i < count(tempData.begin(), tempData.end(), ',') + 1; i++){
+                            if (i != 0)
+                                newData += ",";
+                            if (evaluateType(tempList.getPartialList("t",i,i)) == "variable")
+                                newData += variables.getValue(tempList.getPartialList("t",i,i));
+                            else
+                                newData += tempList.getPartialList("t",i,i);
+                        }
+                        tempData = newData + "]";
                     }
 
                     if (type != tempType){
