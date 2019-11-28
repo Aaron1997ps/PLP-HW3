@@ -210,8 +210,11 @@ int main(int argc, char** argv) {
                 type = "list";
             } else if (isdigit(cdata)) {
                 type = "int";
-            } else {
+            } else if (cdata == '\"' or cdata == "\'"){
                 type = "string";
+            } else {
+                type = variables.getType(data);
+                data = variables.getValue(data);
             }
 
             variables.setVariable(vari, type, data);
