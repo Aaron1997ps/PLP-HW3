@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <tuple>
 using namespace std;
 
 class variableStorage {
@@ -161,12 +162,15 @@ int main(int argc, char** argv) {
     while(getline(inputFile, line)){
         originalLine = line;
 
+        bool afterEqual = false;
         //Erases all the spaces in the line and everything after a #
-        for(unsigned int i=0; i < line.length(); i++){
-            if(line[i] == ' ') line.erase(i, 1);
-            if(line[i] == '#') line.erase(i, line.length() - i);
-            if(line[i] == '(') line.erase(i, 1);
-            if(line[i] == ')') line.erase(i, 1);
+        for(unsigned int i=0; i < line.length(); i++) {
+            if (line[i] == ' ') line.erase(i, 1);
+            if (line[i] == '#') line.erase(i, line.length() - i);
+            if (afterEqual) {
+                if (line[i] == '(') line.erase(i, 1);
+                if (line[i] == ')') line.erase(i, 1);
+            }else if (line[i] == '=') afterEqual = true;
         }
 
         size_t del = line.find('=');
@@ -175,7 +179,7 @@ int main(int argc, char** argv) {
         if(line.empty()) {
             outputFile << originalLine << endl;
         }else if(line.substr(0,5) == "print"){
-            if (line.find('[') == string::npos) { //[ is Not Found in String, thus print out the value as is
+            if (line.find('[') == string::npos) { //if [ is Not Found in String, thus print out the value as is
                 outputFile << originalLine << endl;
                 outputFile << ">>>" << variables.getValue(line.substr(6, line.length() - 7)) << endl;
             }else{
