@@ -228,6 +228,10 @@ int main(int argc, char** argv) {
             }else{
                 string dataIf, dataElse, boolExpression;
                 dataIf = data.substr(0, data.find("if"));
+                boolExpression = data.substr(data.find("if") + 2, data.find("else") - data.find("if") - 2);
+                dataElse = data.substr(data.find("else")+4);
+
+                cout << dataIf << "-" << boolExpression << ":" << dataElse;
             }
             outputFile << originalLine << endl;
         }
