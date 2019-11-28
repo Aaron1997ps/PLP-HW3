@@ -228,10 +228,10 @@ int main(int argc, char** argv) {
                     type = variables.getType(data);
                     data = variables.getValue(data);
                 }
-                if(line.find('+')) {
-                    while (getline(checkit, temp, '+')) {
-                        if (checkit.getValue(temp)) {
-                            words.clear();
+                if(data.find('+')) {
+                    words.clear();
+                    while (getline(data, temp, '+')) {
+                        if (data.getValue(temp)) {
                             words.push_back(temp);
 
                             //still need to search through this and append data with proper stuffs
