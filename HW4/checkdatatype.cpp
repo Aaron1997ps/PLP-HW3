@@ -109,14 +109,14 @@ int main(int argc, char** argv) {
     }
 
 
-    string line;
-    string vari;
-    string data;
+    string line, originalLine;
+    string vari, data, type;
     char cdata;
-    string type;
     variableStorage variables;
 
     while(getline(inputFile, line)){
+        originalLine = line;
+
         //Erases all the spaces in the line
         for(int i=0; i < line.length(); i++){
             if(line[i] == ' ') line.erase(i, 1);
@@ -124,39 +124,28 @@ int main(int argc, char** argv) {
 
         size_t del = line.find('=');
 
-    if(line == ""){
-        continue;
-    }
+        if(line.empty()){
+            continue;
+        }else if( !line.find('#')){
+            continue;
+        }else{
+            if(line.find('=')) {
 
-    else if( !line.find("#")){
-        continue;
-    }
+                vari = line.substr(0, del);
+                data = line.substr(del + 1);
+                cdata = data[0];
+                if (cdata == '[') {
+                    type = "list";
+                } else if (isdigit(cdata)) {
+                    type = "int";
+                } else {
+                    type = "string";
+                }
 
-    else{
+                variables.setVariable(vari, type, data);
 
-        if(line.find("=")){
-
-            vari = line.substr(0, del);
-            data = line.substr(del + 1);
-            cdata = data[0];
-            if (cdata == "[")
-            {
-                type = "list"
             }
-            
-            else if(isdigit(cdata)==true){
-                type = "int";
-            }
-
-            else{
-                type = "string";
-            }
-
-            variables.setVariable(vari,type,data);
-
         }
-            
-    }
 
     outputFile << line << endl;
 
