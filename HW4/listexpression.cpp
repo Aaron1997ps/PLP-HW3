@@ -155,14 +155,11 @@ int main(int argc, char** argv) {
 
     string line, originalLine;
     string vari, data, type;
-<<<<<<< HEAD
-    stringstream checking(data);
-    string temp;
-    vector<string> words;
-    char cdata;
-=======
->>>>>>> 5f09b631e09f01bc2cdc5a218eca7732151fd02e
     variableStorage variables;
+    stringstream checkit;
+    vector<string> words;
+    string temp;
+    
 
     while(getline(inputFile, line)){
         originalLine = line;
