@@ -102,10 +102,6 @@ string variableStorage::getPartialList(const string &variable, int start, int en
     return "[" + value + "]";
 }
 
-void throwError(){
-    cout << "#error" << endl;
-}
-
 string evaluateType(const string& line){
     char cdata = line[0];
     if (cdata == '[')
@@ -190,7 +186,7 @@ int main(int argc, char** argv) {
                 val = val.substr(1,val.length()-2);
 
                 if (val.empty()) {
-                    throwError();
+                    outputFile << "#error" << endl;
                     errorOccured = true;
                 }else{
                     if (line.find(':') == string::npos){
@@ -227,7 +223,6 @@ int main(int argc, char** argv) {
                 //Setup for multiple additions
                 vector<string> sections;
                 temp = data;
-                cout << "Count: " << count(data.begin(), data.end(), '+') << endl;
                 for(int i = 1; i < count(data.begin(), data.end(), '+')+1; i++){
                     sections.push_back(temp.substr(0,temp.find('+')));
                     temp = temp.erase(0, temp.find('+')+1);
@@ -243,16 +238,33 @@ int main(int argc, char** argv) {
 
                 //Merge with other + signs
                 string tempType, tempData;
+                bool errorOccured = false;
                 for(unsigned int i = 1; i < sections.size(); i++){
+                    tempData = sections[i];
                     tempType = evaluateType(tempData);
-                    if (type == "variable"){
+                    if (tempType == "variable"){
                         tempType = variables.getType(tempData);
                         tempData = variables.getValue(tempData);
                     }
 
-                    //Need to add a merge here with sections[i-1] ---------------------------------------
+                    if (type != tempType){
+                        outputFile << "#error" << endl;
+                        errorOccured = true;
+                        break;
+                    }
+                    if (type == "int"){
+                        data = to_string(stoi(data)+stoi(tempData));
+                    }else if (type == "string"){
+                        data = data + tempData;
+                    }else if (type == "list"){
+                        data = data.substr(1, data.length() -2);
+                        tempData = tempData.substr(1, tempData.length()-2);
+
+                        data = "[" + data + "," + tempData + "]";
+                    }
                 }
-                variables.setVariable(vari, type, data);
+                if (!errorOccured)
+                    variables.setVariable(vari, type, data);
             }else{
                 string dataIf, dataElse, boolExpression;
                 dataIf = data.substr(0, data.find("if"));
@@ -300,7 +312,7 @@ int main(int argc, char** argv) {
 
                 //Set Data based on Boolean Expression
                 if (leftType != rightType || leftType == "list" || rightType == "list"){
-                    throwError();
+                    outputFile << "#error" << endl;
                 }else{
                     bool comp;
                     if(comparisonType == ">=")
