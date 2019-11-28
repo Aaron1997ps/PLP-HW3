@@ -109,34 +109,35 @@ int main(int argc, char** argv) {
     }
 
 
-    string cl;
+    string line;
     string vari;
     string data;
     char cdata;
     string type;
     variableStorage variables;
 
-    while(getline(inputFile,cl)){
-        for(int i=0; i<cl.length(); i++){
-            if(cl[i] == ' ') cl.erase(i,1);
-             }
+    while(getline(inputFile, line)){
+        //Erases all the spaces in the line
+        for(int i=0; i < line.length(); i++){
+            if(line[i] == ' ') line.erase(i, 1);
+        }
 
-        size_t del = cl.find('=');
+        size_t del = line.find('=');
 
-    if(cl == ""){
+    if(line == ""){
         continue;
     }
 
-    else if( !cl.find("#")){
+    else if( !line.find("#")){
         continue;
     }
 
     else{
 
-        if(cl.find("=")){
+        if(line.find("=")){
 
-            vari = cl.substr(0, del);
-            data = cl.substr(del + 1);
+            vari = line.substr(0, del);
+            data = line.substr(del + 1);
             cdata = data[0];
             if (cdata == "[")
             {
@@ -157,7 +158,7 @@ int main(int argc, char** argv) {
             
     }
 
-    outputFile << cl << endl;
+    outputFile << line << endl;
 
     }
 
