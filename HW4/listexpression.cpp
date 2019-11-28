@@ -112,7 +112,7 @@ string evaluateType(const string& line){
         return "list";
     else if (isdigit(cdata))
         return "int";
-    else if (cdata == '\"' or cdata == '\'')
+    else if (cdata == '\"' || cdata == '\'')
         return "string";
     else
         return "variable";
@@ -228,7 +228,7 @@ int main(int argc, char** argv) {
                     data = variables.getValue(data);
                 }
                 if(line.find('+')) {
-                    while (getline(checkit, temp, '+')) {
+                    /*while (getline(checkit, temp, '+')) {
                         if (checkit.getValue(temp)) {
                             words.clear();
                             words.push_back(temp);
@@ -237,7 +237,7 @@ int main(int argc, char** argv) {
 
                         }
                         variables.setVariable(vari, type, data);
-                    }
+                    }*/
                 }
             }else{
                 string dataIf, dataElse, boolExpression;
@@ -245,7 +245,7 @@ int main(int argc, char** argv) {
                 boolExpression = data.substr(data.find("if") + 2, data.find("else") - data.find("if") - 2);
                 dataElse = data.substr(data.find("else")+4);
 
-                cout << dataIf << "-" << boolExpression << ":" << dataElse;
+                cout << dataIf << ":" << boolExpression << ":" << dataElse;
             }
             outputFile << originalLine << endl;
         }
