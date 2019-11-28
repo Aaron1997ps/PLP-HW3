@@ -15,6 +15,7 @@ public:
     string getValue(const string& variable);
     void appendPost(const string& appendTo, const string& type, const string& value);
     void appendPre(const string& appendTo, const string& type, const string& value);
+    string getPartialList(const string& variable, int start, int end);
 };
 
 void variableStorage::setVariable(const string& variable, const string& type, const string& value){
@@ -72,7 +73,14 @@ void variableStorage::appendPre(const string& appendTo, const string& type, cons
     }
     setVariable(appendTo, "list", newValue+","+getValue(appendToValue));
 }
+string variableStorage::getPartialList(const string &variable, int start, int end) {
 
+    return "";
+}
+
+void throwError(){
+    cout << "#error" << endl;
+}
 
 int main(int argc, char** argv) {
 
@@ -125,15 +133,51 @@ int main(int argc, char** argv) {
 
         size_t del = line.find('=');
 
-        //Error Checking needs to go heres
-
-        outputFile << originalLine << endl;
 
         if(line.empty()) {
-            //Skip
+            outputFile << originalLine << endl;
         }else if(line.substr(0,5) == "print"){
             if (line.find('[') == string::npos) { //[ is Not Found in String, thus print out the value as is
+                outputFile << originalLine << endl;
                 outputFile << ">>>" << variables.getValue(line.substr(6, line.length() - 7)) << endl;
+            }else{
+                bool errorOccured = false;
+
+                string var = line.substr(6, line.find('[') - 6); //Variable
+                string val = variables.getValue(var);
+
+                //Remove brackets
+                val = val.substr(1,val.length()-2);
+
+                if (val.empty()) {
+                    throwError();
+                    errorOccured = true;
+                }else{
+                    if (line.find(':') == string::npos){
+                        int pos = stoi(line.substr(line.find('[')+1, line.find(']') - line.find('[') -1 ));
+                        line = variables.getPartialList(var, pos, pos); //Line temporarily being used to transfer data to output
+                    }else{
+                        int pos1, pos2;
+                        string temp = line.substr(line.find('[')+1, line.find(':') - line.find('[') -1 );
+                        if (temp.empty())
+                            pos1 = 0;
+                        else
+                            pos1 = stoi(temp);
+
+                        temp = line.substr(line.find(':')+1, line.find(']') - line.find(':') -1 );
+                        if (temp.empty())
+                            pos2 = count(line.begin(), line.end(), ',') + 2;
+                        else
+                            pos2 = stoi(temp);
+
+                        line = variables.getPartialList(var, pos1, pos2); //Line temporarily being used to transfer data to output
+                    }
+                }
+
+                outputFile << originalLine << endl;
+                if (!errorOccured)
+                    outputFile << ">>>" << line << endl;
+
             }
         }else if(line.find('=')) {
             vari = line.substr(0, del);
@@ -148,6 +192,8 @@ int main(int argc, char** argv) {
             }
 
             variables.setVariable(vari, type, data);
+
+            outputFile << originalLine << endl;
         }
     }
 
