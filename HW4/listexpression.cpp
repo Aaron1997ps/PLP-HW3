@@ -246,7 +246,18 @@ int main(int argc, char** argv) {
                 boolExpression = data.substr(data.find("if") + 2, data.find("else") - data.find("if") - 2);
                 dataElse = data.substr(data.find("else")+4);
 
-                cout << dataIf << ":" << boolExpression << ":" << dataElse;
+                string typeIf, typeElse;
+                typeIf = evaluateType(dataIf);
+                typeElse = evaluateType(dataElse);
+
+                if (typeIf == "variable"){
+                    typeIf = variables.getType(dataIf);
+                    dataIf = variables.getValue(dataIf);
+                }
+                if (typeElse == "variable"){
+                    typeElse = variables.getType(dataElse);
+                    dataElse = variables.getValue(dataElse);
+                }
 
                 //Evaluate Boolean Expression
                 string leftType, leftValue, rightType, rightValue, comparisonType;
@@ -261,8 +272,30 @@ int main(int argc, char** argv) {
                 }else if (boolExpression.find('<') != string::npos){
                     comparisonType = "<";
                 }
-                leftValue = boolExpression.substr(0, boolExpression.)
-                leftType = evaluateType()
+                leftValue = boolExpression.substr(0, boolExpression.find(comparisonType));
+                leftType = evaluateType(leftValue);
+                if (leftType == "variable"){
+                    leftType = variables.getType(leftValue);
+                    leftValue = variables.getValue(leftValue);
+                }
+                rightValue = boolExpression.substr(0, boolExpression.find(comparisonType));
+                rightType = evaluateType(rightValue);
+                if (leftType == "variable"){
+                    rightType = variables.getType(rightValue);
+                    rightValue = variables.getValue(rightValue);
+                }
+
+                //Set Data based on Boolean Expression
+                if (leftType != rightType || leftType == "list" || rightType == "list"){
+                    throwError();
+                }else{
+                    if(comparisonType == ">="){
+                        if(leftType == "int") {
+                            if (stoi(leftValue) >= stoi(rightValue))
+                                variables.setVariable(vari, type, data);
+                        }
+                    }
+                }
             }
             outputFile << originalLine << endl;
         }
