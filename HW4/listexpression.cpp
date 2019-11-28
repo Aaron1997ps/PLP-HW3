@@ -31,7 +31,7 @@ string variableStorage::getType(const string& variable){
 string variableStorage::getValue(const string& variable){
     for (auto & i : variables){
         if (get<0>(i) == variable){
-            return get<1>(i);
+            return get<2>(i);
         }
     }
     return "Not Found";
@@ -125,6 +125,10 @@ int main(int argc, char** argv) {
 
         size_t del = line.find('=');
 
+        //Error Checking needs to go heres
+
+        outputFile << originalLine << endl;
+
         if(line.empty()) {
             //Skip
         }else if(line.substr(0,5) == "print"){
@@ -143,9 +147,6 @@ int main(int argc, char** argv) {
 
             variables.setVariable(vari, type, data);
         }
-
-        outputFile << originalLine << endl;
-
     }
 
 
