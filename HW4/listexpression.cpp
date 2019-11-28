@@ -278,7 +278,7 @@ int main(int argc, char** argv) {
                     leftType = variables.getType(leftValue);
                     leftValue = variables.getValue(leftValue);
                 }
-                rightValue = boolExpression.substr(0, boolExpression.find(comparisonType));
+                rightValue = boolExpression.substr(boolExpression.find(comparisonType)+comparisonType.length());
                 rightType = evaluateType(rightValue);
                 if (leftType == "variable"){
                     rightType = variables.getType(rightValue);
@@ -289,12 +289,22 @@ int main(int argc, char** argv) {
                 if (leftType != rightType || leftType == "list" || rightType == "list"){
                     throwError();
                 }else{
-                    if(comparisonType == ">="){
-                        if(leftType == "int") {
-                            if (stoi(leftValue) >= stoi(rightValue))
-                                variables.setVariable(vari, type, data);
-                        }
-                    }
+                    bool comp;
+                    if(comparisonType == ">=")
+                        comp = stoi(leftValue) >= stoi(rightValue);
+                    else if(comparisonType == "<=")
+                        comp = stoi(leftValue) <= stoi(rightValue);
+                    else if(comparisonType == "==")
+                        comp = stoi(leftValue) == stoi(rightValue);
+                    else if(comparisonType == ">")
+                        comp = stoi(leftValue) > stoi(rightValue);
+                    else if(comparisonType == "<")
+                        comp = stoi(leftValue) < stoi(rightValue);
+
+                    if(comp)
+                        variables.setVariable(vari, typeIf, dataIf);
+                    else
+                        variables.setVariable(vari, typeElse, dataElse);
                 }
             }
             outputFile << originalLine << endl;
