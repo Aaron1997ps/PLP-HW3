@@ -166,7 +166,7 @@ int main(int argc, char** argv) {
         originalLine = line;
 
         //Erases all the spaces in the line and everything after a #
-        for(int i=0; i < line.length(); i++){
+        for(unsigned int i=0; i < line.length(); i++){
             if(line[i] == ' ') line.erase(i, 1);
             if(line[i] == '#') line.erase(i, line.length() - i);
         }
@@ -198,7 +198,7 @@ int main(int argc, char** argv) {
                         line = variables.getPartialList(var, pos, pos); //Line temporarily being used to transfer data to output
                     }else{
                         int pos1, pos2;
-                        string temp = line.substr(line.find('[')+1, line.find(':') - line.find('[') -1 );
+                        temp = line.substr(line.find('[')+1, line.find(':') - line.find('[') -1 );
                         if (temp.empty())
                             pos1 = 0;
                         else
@@ -223,23 +223,36 @@ int main(int argc, char** argv) {
             vari = line.substr(0, del);
             data = line.substr(del + 1);
             if (line.find("if") == string::npos) {
+
+                //Setup for multiple additions
+                vector<string> sections;
+                temp = data;
+                cout << "Count: " << count(data.begin(), data.end(), '+') << endl;
+                for(int i = 1; i < count(data.begin(), data.end(), '+')+1; i++){
+                    sections.push_back(temp.substr(0,temp.find('+')));
+                    temp = temp.erase(0, temp.find('+')+1);
+                }
+                sections.push_back(temp);
+
+                data = sections[0];
                 type = evaluateType(data);
                 if (type == "variable"){
                     type = variables.getType(data);
                     data = variables.getValue(data);
                 }
-                if(data.find('+')) {
-                    words.clear();
-                    while (getline(data, temp, '+')) {
-                        if (data.getValue(temp)) {
-                            words.push_back(temp);
 
-                            //still need to search through this and append data with proper stuffs
-
-                        }
-                        variables.setVariable(vari, type, data);
+                //Merge with other + signs
+                string tempType, tempData;
+                for(unsigned int i = 1; i < sections.size(); i++){
+                    tempType = evaluateType(tempData);
+                    if (type == "variable"){
+                        tempType = variables.getType(tempData);
+                        tempData = variables.getValue(tempData);
                     }
+
+                    //Need to add a merge here with sections[i-1] ---------------------------------------
                 }
+                variables.setVariable(vari, type, data);
             }else{
                 string dataIf, dataElse, boolExpression;
                 dataIf = data.substr(0, data.find("if"));
