@@ -349,7 +349,6 @@ int main(int argc, char** argv) {
                     dataElse = variables.getValue(dataElse);
                 }
 
-                cout << "typeIf: " << typeIf << " dataIf: " << dataIf << " typeElse: " << typeElse << " dataElse: " << dataElse << endl;
 
                 //Evaluate Boolean Expression
                 string leftType, leftValue, rightType, rightValue, comparisonType;
@@ -376,8 +375,7 @@ int main(int argc, char** argv) {
                     rightType = variables.getType(rightValue);
                     rightValue = variables.getValue(rightValue);
                 }
-
-                cout << "leftType: " << leftType << " leftValue: " << leftValue << " rightType: " << rightType << " rightValue: " << rightValue << endl;
+                
                 //Set Data based on Boolean Expression
                 if (leftType != rightType){
                     outputFile << "#error" << endl;
