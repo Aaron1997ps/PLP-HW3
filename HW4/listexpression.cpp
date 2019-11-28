@@ -5,6 +5,8 @@
 #include <vector>
 #include <sstream>
 #include <tuple>
+#include <algorithm>
+
 using namespace std;
 
 class variableStorage {
