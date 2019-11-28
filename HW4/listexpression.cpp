@@ -132,7 +132,9 @@ int main(int argc, char** argv) {
         if(line.empty()) {
             //Skip
         }else if(line.substr(0,5) == "print"){
-            outputFile << ">>>" << variables.getValue(line.substr(6,line.length()-7)) << endl;
+            if (line.find('[') == string::npos) { //[ is Not Found in String, thus print out the value as is
+                outputFile << ">>>" << variables.getValue(line.substr(6, line.length() - 7)) << endl;
+            }
         }else if(line.find('=')) {
             vari = line.substr(0, del);
             data = line.substr(del + 1);
