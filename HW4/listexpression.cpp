@@ -205,20 +205,24 @@ int main(int argc, char** argv) {
         }else if(line.find('=')) {
             vari = line.substr(0, del);
             data = line.substr(del + 1);
-            cdata = data[0];
-            if (cdata == '[') {
-                type = "list";
-            } else if (isdigit(cdata)) {
-                type = "int";
-            } else if (cdata == '\"' or cdata == "\'"){
-                type = "string";
-            } else {
-                type = variables.getType(data);
-                data = variables.getValue(data);
+            if (line.find("if") == string::npos) {
+                cdata = data[0];
+                if (cdata == '[') {
+                    type = "list";
+                } else if (isdigit(cdata)) {
+                    type = "int";
+                } else if (cdata == '\"' or cdata == '\'') {
+                    type = "string";
+                } else {
+                    type = variables.getType(data);
+                    data = variables.getValue(data);
+                }
+
+                variables.setVariable(vari, type, data);
+            }else{
+                string dataIf, dataElse, boolExpression;
+                dataIf = data.substr(0, data.find("if"));
             }
-
-            variables.setVariable(vari, type, data);
-
             outputFile << originalLine << endl;
         }
     }
