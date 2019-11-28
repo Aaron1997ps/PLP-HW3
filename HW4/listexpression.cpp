@@ -24,7 +24,6 @@ public:
 
 void variableStorage::setVariable(const string& variable, const string& type, const string& value){
     variables.emplace_back(variable, type, value);
-    cout << "Var: " << variable << " type: " << type << " data: " << value << endl;
 };
 string variableStorage::getType(const string& variable){
     for (auto & i : variables){
@@ -342,7 +341,7 @@ int main(int argc, char** argv) {
                 }
                 rightValue = boolExpression.substr(boolExpression.find(comparisonType)+comparisonType.length());
                 rightType = evaluateType(rightValue);
-                if (leftType == "variable"){
+                if (rightType == "variable"){
                     rightType = variables.getType(rightValue);
                     rightValue = variables.getValue(rightValue);
                 }
