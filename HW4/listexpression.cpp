@@ -3,6 +3,7 @@
 #include <array>
 #include <string>
 #include <vector>
+#include <sstream>
 using namespace std;
 
 class variableStorage {
@@ -111,7 +112,7 @@ string evaluateType(const string& line){
         return "list";
     else if (isdigit(cdata))
         return "int";
-    else if (cdata == '\"' or cdata == '\'')
+    else if (cdata == '\"' || cdata == '\'')
         return "string";
     else
         return "variable";
@@ -155,6 +156,9 @@ int main(int argc, char** argv) {
 
     string line, originalLine;
     string vari, data, type;
+    stringstream checking(data);
+    string temp;
+    vector<string> words;
     variableStorage variables;
     stringstream checkit;
     vector<string> words;
@@ -227,20 +231,25 @@ int main(int argc, char** argv) {
                     type = variables.getType(data);
                     data = variables.getValue(data);
                 }
-                if(line.find('+')){
-                
-                while(getline(checkit, temp, '+')){
-                    if(checkit.getValue(temp)){
-                        words.clear();
-                        words.push_back(temp);
+                if(line.find('+')) {
+                    /*while (getline(checkit, temp, '+')) {
+                        if (checkit.getValue(temp)) {
+                            words.clear();
+                            words.push_back(temp);
 
-                         //still need to search through this and append data with proper stuffs
+                            //still need to search through this and append data with proper stuffs
 
-                    }
-                variables.setVariable(vari, type, data);
+                        }
+                        variables.setVariable(vari, type, data);
+                    }*/
+                }
             }else{
                 string dataIf, dataElse, boolExpression;
                 dataIf = data.substr(0, data.find("if"));
+                boolExpression = data.substr(data.find("if") + 2, data.find("else") - data.find("if") - 2);
+                dataElse = data.substr(data.find("else")+4);
+
+                cout << dataIf << ":" << boolExpression << ":" << dataElse;
             }
             outputFile << originalLine << endl;
         }
