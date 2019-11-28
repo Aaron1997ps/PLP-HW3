@@ -318,6 +318,13 @@ int main(int argc, char** argv) {
                         }
                         tempData = newData;
 
+                        tempList.setVariable("t2", "list", "[" + data + "]");
+                        if (evaluateType(tempList.getPartialList("t", 0, 0)) != evaluateType(tempList.getPartialList("t2", 0, 0))){
+                            outputFile << "#error" << endl;
+                            errorOccured = true;
+                            break;
+                        }
+
                         data = "[" + data + "," + tempData + "]";
                     }
                 }
