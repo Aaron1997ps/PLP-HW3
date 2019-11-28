@@ -74,6 +74,18 @@ void variableStorage::appendPre(const string& appendTo, const string& type, cons
     setVariable(appendTo, "list", newValue+","+getValue(appendToValue));
 }
 string variableStorage::getPartialList(const string &variable, int start, int end) {
+    string value = getValue(variable);
+
+    //Remove brackets
+    value = value.substr(1, value.length() -2);
+
+    for(int i = 0; i < start; i ++){
+        value = value.erase(0, value.find(',')+1);
+    }
+
+    if (start == end){
+        return value.substr(0,value.find(','));
+    }
 
     return "";
 }
