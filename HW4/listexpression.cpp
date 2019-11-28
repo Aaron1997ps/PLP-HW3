@@ -296,6 +296,19 @@ int main(int argc, char** argv) {
                         data = data.substr(1, data.length() -2);
                         tempData = tempData.substr(1, tempData.length()-2);
 
+                        variableStorage tempList;
+                        tempList.setVariable("t", "list", "["+tempData+"]");
+                        string newData;
+                        for(int i = 0; i < count(tempData.begin(), tempData.end(), ',') + 1; i++){
+                            if (i != 0)
+                                newData += ",";
+                            if (evaluateType(tempList.getPartialList("t",i,i)) == "variable")
+                                newData += variables.getValue(tempList.getPartialList("t",i,i));
+                            else
+                                newData += tempList.getPartialList("t",i,i);
+                        }
+                        tempData = newData;
+
                         data = "[" + data + "," + tempData + "]";
                     }
                 }
@@ -347,8 +360,34 @@ int main(int argc, char** argv) {
                 }
 
                 //Set Data based on Boolean Expression
-                if (leftType != rightType || leftType == "list" || rightType == "list"){
+                if (leftType != rightType){
                     outputFile << "#error" << endl;
+                }else if (leftType == "list" || rightType == "list") {
+                    if (comparisonType != "==")
+                        outputFile << "#error" << endl;
+                    else {
+                        if (leftValue == rightValue)
+                            variables.setVariable(vari, typeIf, dataIf);
+                        else
+                            variables.setVariable(vari, typeElse, dataElse);
+                    }
+                }else if (leftType == "string" || rightType == "string") {
+                    bool comp;
+                    if(comparisonType == ">=")
+                        comp = leftValue >= rightValue;
+                    else if(comparisonType == "<=")
+                        comp = leftValue <= rightValue;
+                    else if(comparisonType == "==")
+                        comp = leftValue == rightValue;
+                    else if(comparisonType == ">")
+                        comp = leftValue > rightValue;
+                    else if(comparisonType == "<")
+                        comp = leftValue < rightValue;
+
+                    if(comp)
+                        variables.setVariable(vari, typeIf, dataIf);
+                    else
+                        variables.setVariable(vari, typeElse, dataElse);
                 }else{
                     bool comp;
                     if(comparisonType == ">=")
