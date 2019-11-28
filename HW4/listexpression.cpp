@@ -3,6 +3,7 @@
 #include <array>
 #include <string>
 #include <vector>
+#include <sstream>
 using namespace std;
 
 class variableStorage {
@@ -155,13 +156,9 @@ int main(int argc, char** argv) {
 
     string line, originalLine;
     string vari, data, type;
-<<<<<<< HEAD
     stringstream checking(data);
     string temp;
     vector<string> words;
-    char cdata;
-=======
->>>>>>> 5f09b631e09f01bc2cdc5a218eca7732151fd02e
     variableStorage variables;
 
     while(getline(inputFile, line)){
@@ -230,17 +227,18 @@ int main(int argc, char** argv) {
                     type = variables.getType(data);
                     data = variables.getValue(data);
                 }
-                if(line.find('+')){
-                
-                while(getline(checkit, temp, '+')){
-                    if(checkit.getValue(temp)){
-                        words.clear();
-                        words.push_back(temp);
+                if(line.find('+')) {
+                    while (getline(checkit, temp, '+')) {
+                        if (checkit.getValue(temp)) {
+                            words.clear();
+                            words.push_back(temp);
 
-                         //still need to search through this and append data with proper stuffs
+                            //still need to search through this and append data with proper stuffs
 
+                        }
+                        variables.setVariable(vari, type, data);
                     }
-                variables.setVariable(vari, type, data);
+                }
             }else{
                 string dataIf, dataElse, boolExpression;
                 dataIf = data.substr(0, data.find("if"));
