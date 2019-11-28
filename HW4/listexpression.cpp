@@ -105,6 +105,19 @@ void throwError(){
     cout << "#error" << endl;
 }
 
+string evaluateType(const string& line){
+    char cdata = line[0];
+    if (cdata == '[')
+        return "list";
+    else if (isdigit(cdata))
+        return "int";
+    else if (cdata == '\"' or cdata == '\'')
+        return "string";
+    else
+        return "variable";
+
+}
+
 int main(int argc, char** argv) {
 
     if (argc <= 1) {
@@ -142,7 +155,6 @@ int main(int argc, char** argv) {
 
     string line, originalLine;
     string vari, data, type;
-    char cdata;
     variableStorage variables;
 
     while(getline(inputFile, line)){
@@ -206,14 +218,8 @@ int main(int argc, char** argv) {
             vari = line.substr(0, del);
             data = line.substr(del + 1);
             if (line.find("if") == string::npos) {
-                cdata = data[0];
-                if (cdata == '[') {
-                    type = "list";
-                } else if (isdigit(cdata)) {
-                    type = "int";
-                } else if (cdata == '\"' or cdata == '\'') {
-                    type = "string";
-                } else {
+                type = evaluateType(data);
+                if (type == "variable"){
                     type = variables.getType(data);
                     data = variables.getValue(data);
                 }
