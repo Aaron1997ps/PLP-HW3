@@ -156,9 +156,6 @@ int main(int argc, char** argv) {
 
     string line, originalLine;
     string vari, data, type;
-    stringstream checking(data);
-    string temp;
-    vector<string> words;
     variableStorage variables;
     stringstream checkit;
     vector<string> words;
@@ -232,7 +229,7 @@ int main(int argc, char** argv) {
                     data = variables.getValue(data);
                 }
                 if(line.find('+')) {
-                    /*while (getline(checkit, temp, '+')) {
+                    while (getline(checkit, temp, '+')) {
                         if (checkit.getValue(temp)) {
                             words.clear();
                             words.push_back(temp);
@@ -241,7 +238,7 @@ int main(int argc, char** argv) {
 
                         }
                         variables.setVariable(vari, type, data);
-                    }*/
+                    }
                 }
             }else{
                 string dataIf, dataElse, boolExpression;
@@ -250,6 +247,22 @@ int main(int argc, char** argv) {
                 dataElse = data.substr(data.find("else")+4);
 
                 cout << dataIf << ":" << boolExpression << ":" << dataElse;
+
+                //Evaluate Boolean Expression
+                string leftType, leftValue, rightType, rightValue, comparisonType;
+                if (boolExpression.find(">=") != string::npos){
+                    comparisonType = ">=";
+                }else if (boolExpression.find("<=") != string::npos){
+                    comparisonType = "<=";
+                }else if (boolExpression.find("==") != string::npos){
+                    comparisonType = "==";
+                }else if (boolExpression.find('>') != string::npos){
+                    comparisonType = ">";
+                }else if (boolExpression.find('<') != string::npos){
+                    comparisonType = "<";
+                }
+                leftValue = boolExpression.substr(0, boolExpression.)
+                leftType = evaluateType()
             }
             outputFile << originalLine << endl;
         }
