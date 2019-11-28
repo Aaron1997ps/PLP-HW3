@@ -210,7 +210,7 @@ int main(int argc, char** argv) {
 
                         temp = line.substr(line.find(':')+1, line.find(']') - line.find(':') -1 );
                         if (temp.empty())
-                            pos2 = count(line.begin(), line.end(), ',') + 2;
+                            pos2 = count(val.begin(), val.end(), ',') + 1;
                         else
                             pos2 = stoi(temp);
 
